@@ -40,11 +40,12 @@ func (l *LinkedList) AddToBeginning(value int) {
 	newNodo := &Node{Data: value, Next: nil}
 	if l.Head == nil {
 		l.Head = newNodo
+	} else {
+		aux := l.Head
+		l.Head = newNodo
+		l.Head.Next = aux
+		l.Length++
 	}
-	aux := l.Head
-	l.Head = newNodo
-	l.Head.Next = aux
-	l.Length++
 }
 
 func (l *LinkedList) TheListToSLice() *[]int {
@@ -61,5 +62,12 @@ func (l *LinkedList) TheListToSLice() *[]int {
 }
 
 func (l *LinkedList) ShowLinkedList() {
-	fmt.Println(l)
+	fmt.Println()
+	if l.Head != nil {
+		current := l.Head
+		for current != nil {
+			fmt.Print(current.Data, " -> ")
+			current = current.Next
+		}
+	}
 }

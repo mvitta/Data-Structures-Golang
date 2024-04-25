@@ -11,8 +11,7 @@ import (
 )
 
 type BodyValue struct {
-	ValueLast  int `json:"valueLast"`
-	ValueFirst int `json:"valueFirst"`
+	Data int `json:"data"`
 }
 
 type ResponseList struct {
@@ -37,8 +36,8 @@ func HandleTestList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var bodyValue BodyValue
-	error_json := json.Unmarshal(body, &bodyValue)
+	var dataBody BodyValue
+	error_json := json.Unmarshal(body, &dataBody)
 	if error_json != nil {
 		http.Error(w, "Error en los datos ingresados", http.StatusBadRequest)
 		return
@@ -50,20 +49,11 @@ func HandleTestList(w http.ResponseWriter, r *http.Request) {
 	// 	return
 	// }
 
-	// if the numbers are negatives, it does not execute the corresponding method
-
-	if bodyValue.ValueFirst > 0 {
-		l.AddToEnd(bodyValue.ValueLast)
-	}
-
-	if bodyValue.ValueLast > 0 {
-		l.AddToBeginning(bodyValue.ValueFirst)
-	}
-
+	l.AddToBeginning(dataBody.Data)
 	myResponse := ResponseList{
 		TheList: l,
 	}
-
+	l.ShowLinkedList()
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(myResponse.Json()))
