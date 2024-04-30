@@ -17,7 +17,8 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("POST /list", routes.HandleTestList)
+	mux.HandleFunc("GET /", routes.HandleShowElements)
+	mux.HandleFunc("POST /add", routes.HandleTestAdd)
 
 	log.Fatal(http.ListenAndServe(":8080", mux))
 

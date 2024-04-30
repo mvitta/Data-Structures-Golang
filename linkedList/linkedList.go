@@ -1,10 +1,18 @@
 package linkedlist
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type Node struct {
 	Data int   `json:"data"`
 	Next *Node `json:"Next"`
+}
+
+func (node *Node) NodeToJson() []byte {
+	json, _ := json.Marshal(node)
+	return json
 }
 
 type LinkedList struct {
@@ -21,7 +29,7 @@ func NewLinkedList(value int) LinkedList {
 		Length: 1}
 }
 
-func (l *LinkedList) AddToEnd(value int) {
+func (l *LinkedList) AddToEnd(value int) *Node {
 	newNodo := &Node{Data: value, Next: nil}
 	if l.Head == nil {
 		l.Head = newNodo
@@ -34,9 +42,10 @@ func (l *LinkedList) AddToEnd(value int) {
 	}
 
 	l.Length++
+	return newNodo
 }
 
-func (l *LinkedList) AddToBeginning(value int) {
+func (l *LinkedList) AddToBeginning(value int) *Node {
 	newNodo := &Node{Data: value, Next: nil}
 	if l.Head == nil {
 		l.Head = newNodo
@@ -44,8 +53,9 @@ func (l *LinkedList) AddToBeginning(value int) {
 		aux := l.Head
 		l.Head = newNodo
 		l.Head.Next = aux
-		l.Length++
 	}
+	l.Length++
+	return newNodo
 }
 
 func (l *LinkedList) TheListToSLice() *[]int {
