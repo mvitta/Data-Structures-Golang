@@ -19,6 +19,7 @@ func main() {
 
 	mux.HandleFunc("GET /", routes.HandleShowElements)
 	mux.HandleFunc("POST /add", routes.HandleTestAdd)
+	mux.HandleFunc("POST /search", routes.HandleSearch)
 
 	log.Fatal(http.ListenAndServe(":8080", mux))
 

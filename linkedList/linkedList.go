@@ -2,6 +2,7 @@ package linkedlist
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 )
 
@@ -56,6 +57,25 @@ func (l *LinkedList) AddToBeginning(value int) *Node {
 	}
 	l.Length++
 	return newNodo
+}
+
+func (l *LinkedList) SearchByValue(value int) (*Node, error) {
+	if l.Head == nil {
+		return nil, errors.New("lista vacia")
+	}
+
+	if l.Head.Data == value {
+		return l.Head, nil
+	}
+
+	current := l.Head.Next
+	for current != nil {
+		if current.Data == value {
+			return current, nil
+		}
+		current = current.Next
+	}
+	return &Node{}, nil
 }
 
 func (l *LinkedList) TheListToSLice() *[]int {
